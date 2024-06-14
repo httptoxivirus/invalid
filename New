@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class TimeInput {
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    int hours, minutes, seconds;
+
+    while (true) {
+      try {
+        System.out.print("Enter time (HH MM SS): ");
+        hours = scanner.nextInt();
+        minutes = scanner.nextInt();
+        seconds = scanner.nextInt();
+
+        validateTime(hours, minutes, seconds); // Validate time
+        System.out.println("Valid time: " + hours + ":" + minutes + ":" + seconds);
+        break; // Exit loop on valid input
+      } catch (InvalidTimeException e) {
+        System.err.println("Error: " + e.getMessage());
+      }
+    }
+
+    scanner.close();
+  }
+
+  public static void validateTime(int hours, int minutes, int seconds) throws InvalidTimeException {
+    if (hours < 0 || hours > 23) {
+      throw new InvalidTimeException("Invalid hours. Hours must be between 0 and 23.");
+    }
+    if (minutes < 0 || minutes > 59) {
+      throw new InvalidTimeException("Invalid minutes. Minutes must be between 0 and 59.");
+    }
+    if (seconds < 0 || seconds > 59) {
+      throw new InvalidTimeException("Invalid seconds. Seconds must be between 0 and 59.");
+    }
+  }
+}
+
+class InvalidTimeException extends Exception {
+
+  public InvalidTimeException(String message) {
+    super(message);
+  }
+}
